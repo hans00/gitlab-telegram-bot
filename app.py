@@ -152,7 +152,8 @@ def register():
         else:
             token = sha1(url.encode('utf8')).hexdigest()
             db['repos'].insert(dict(token=token, name=name, url=url))
-            return render_template('register_done.html', success=True, token=token, bot_username=bot.username)
+            base_url = '/'.join(bot.webhook_url.split("/")[:3])
+            return render_template('register_done.html', success=True, token=token, base_url=base_url, bot_username=bot.username)
 
 @app.route("/gitlab/", methods=['GET', 'POST'])
 def gitlab_webhook():
