@@ -40,7 +40,7 @@ def init_db():
         db['repos'].create_column('url', db.types.text)
         db.create_table('chats')
         db['chats'].create_column('token', db.types.string(40))
-        db['chats'].create_column('chat_id', db.types.integer)
+        db['chats'].create_column('chat_id', db.types.bigint)
         db.commit()
 
 @app.teardown_appcontext
