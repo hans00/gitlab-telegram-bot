@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+		<title>GitLab ChatBot</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<!--[if lt IE 9]>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+		
+		<div class="container text-center">
+			<div class="row">
+				<div class="col-sm-offset-2 col-sm-8">
+					<h1>哈囉～哩後！</h1>
+					<br>
+					<a  href="{{url_for('register')}}" class="btn lg-btn btn-primary">註冊 GitLab Repository</a>
+					<br>
+					<br>
+					<div class="list-group">
+						{% for repo in repos %}
+						<a href="{{repo.url}}" class="list-group-item" target="_blank">{{repo.name}}</a>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<script src="https://code.jquery.com/jquery.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	</body>
+</html>
