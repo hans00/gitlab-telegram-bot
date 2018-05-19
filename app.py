@@ -40,7 +40,7 @@ def init_db():
         db['repos'].create_column('url', db.types.text)
         db.create_table('chats')
         db['chats'].create_column('token', db.types.string(40))
-        db['chats'].create_column('chat_id', db.types.bigint)
+        db['chats'].create_column('chat_id', db.types.string(20))
         db.commit()
 
 @app.teardown_appcontext
@@ -54,7 +54,7 @@ def startup():
     db = get_db()
     msg = "大家好，台灣最大的 GitLab 機器人上線啦。"
     for chat in db['chats'].all():
-        bot.send_message(MarkdownMessage(msg), chat['chat_id'], None)
+        bot.send_message(MarkdownMessage(msg), int(chat['chat_id']), None)
 
 @bot.on_message
 def msg_me(update, msg):
@@ -97,8 +97,8 @@ def reg(update, text):
         else:  # user chat
             sender = update.message.from_peer.id
         if len(result) > 0:
-            if not db['chats'].find_one(token=token, chat_id=sender):
-                db['chats'].insert(dict(token=token, chat_id=sender))
+            if not db['chats'].find_one(token=token, chat_id=str(sender)):
+                db['chats'].insert(dict(token=token, chat_id=str(sender)))
                 return MarkdownMessage("\U0001F60E Yey! It's works.")
             else:
                 return MarkdownMessage("重複綁定")
@@ -112,11 +112,11 @@ def bye(update, text):
         sender = update.message.chat.id
     else:  # user chat
         sender = update.message.from_peer.id
-    bind_count = db['chats'].count(chat_id=sender)
+    bind_count = db['chats'].count(chat_id=str(sender))
     if bind_count == 0:
         return MarkdownMessage("你未曾綁定過任何專案唷")
     if bind_count == 1:
-        db['chats'].delete(chat_id=sender)
+        db['chats'].delete(chat_id=str(sender))
         return MarkdownMessage("\U0001F63F 好吧\n掰掰")
     elif not text:
         repo_list = "`token` - *專案名稱*"
@@ -127,8 +127,8 @@ def bye(update, text):
     else:
         args = shlex.split(text)
         token = args[0]
-        if db['chats'].find_one(chat_id=sender, token=token):
-            db['chats'].delete(chat_id=sender, token=token)
+        if db['chats'].find_one(chat_id=str(sender), token=token):
+            db['chats'].delete(chat_id=str(sender), token=token)
             return MarkdownMessage("\U0001F63F 好吧\n掰掰")
         else:
             return MarkdownMessage("呃... 你似乎沒綁定過這個")
@@ -188,7 +188,7 @@ def gitlab_webhook():
         else:
             msg = 'ERROR: `unknown_event`'
         for chat in chats:
-            bot.send_message(MarkdownMessage(msg), chat['chat_id'], None)
+            bot.send_message(MarkdownMessage(msg), int(chat['chat_id']), None)
         return jsonify({'status': 'ok'}), 200
     else:
         return jsonify({'status':'invalid request'}), 400
