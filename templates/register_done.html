@@ -28,14 +28,14 @@
 						你的 token：<code>{{token}}</code>
 						<br>
 						<br>
-						GitLab 的 Webhook 網址為：{{base_url}}/gitlab/
+						GitLab 的 Webhook 網址為：<code>{{base_url}}/gitlab/</code>
 						<br>
-						Telegram 機器人：https://telegram.me/{{bot_username}}
+						<a href="https://telegram.me/{{bot_username}}">Telegram 機器人</a>
 					</div>
 					<a href="{{url_for('index')}}" class="btn btn-primary">返回首頁</a>
 					{% else %}
 					<p class="bg-danger">
-					失敗
+					失敗，請檢查網址是否爲 GitLab 的專案。
 					</p>
 					<a href="{{url_for('index')}}" class="btn btn-primary">返回首頁</a>
 					{% endif %}
