@@ -19,9 +19,10 @@
 					<h1>註冊</h1>
 					<br>
 					{% if success %}
-					<div class="bg-success">
+					<div class="alert alert-success" role="alert">
 						成功
-						<br>
+					</div>
+					<div class="well well-sm">
 						請記下專案專屬的 token，這將用於 GitLab 的 Web Hook 與 Telegram 聊天室的綁定。
 						<br>
 						<br>
@@ -30,13 +31,14 @@
 						<br>
 						GitLab 的 Webhook 網址為：<code>{{base_url}}/gitlab/</code>
 						<br>
-						<a href="https://telegram.me/{{bot_username}}">Telegram 機器人</a>
+						<br>
+						<a target="_blank" href="https://telegram.me/{{bot_username}}" class="btn btn-default">Telegram 機器人</a>
 					</div>
 					<a href="{{url_for('index')}}" class="btn btn-primary">返回首頁</a>
 					{% else %}
-					<p class="bg-danger">
+					<div class="alert alert-danget" role="alert">
 					失敗，請檢查網址是否爲 GitLab 的專案。
-					</p>
+					</div>
 					<a href="{{url_for('index')}}" class="btn btn-primary">返回首頁</a>
 					{% endif %}
 				</div>
