@@ -187,7 +187,7 @@ def register():
         name  = request.form.get('name', type=str, default='')
         url   = request.form.get('url', type=str, default='')
         token = sha1(url.encode('utf8')).hexdigest()
-        exists = db['repos'].count(dict(token=token))
+        exists = db['repos'].count(token=token)
         if name != '' and url != '' and exists == 0 and url_regex.match(url) and check_url(url):
             db['repos'].insert(dict(token=token, name=name, url=url))
             base_url = '/'.join(bot.webhook_url.split("/")[:3])
