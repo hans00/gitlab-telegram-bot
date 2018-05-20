@@ -158,10 +158,10 @@ def bye(update, text):
         db['chats'].delete(chat_id=sender)
         return MarkdownMessage("\U0001F63F 好吧\n掰掰")
     elif not text:
-        repo_list = "`token` - *專案名稱*\n`all` - *全部*"
+        repo_list = "*token* - *專案名稱*\n`all` - *全部*"
         for bind in db['chats'].find(chat_id=sender):
             repo = db['repos'].find_one(token=bind['token'])
-            repo_list += "`%s` - *%s*\n" % (repo['token'], markdown_escape(repo['name']))
+            repo_list += "`\n%s` - *%s*" % (repo['token'], markdown_escape(repo['name']))
         return MarkdownMessage("找到有綁定多個專案，請指定。\n使用方法： /bye <token>\n"+repo_list)
     else:
         args = shlex.split(text)
