@@ -2,5 +2,5 @@ Flask
 requests
 Teleflask
 dataset
-psycopg2
+psycopg2-binary
 pip==10.0.1
