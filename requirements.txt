@@ -3,4 +3,4 @@ requests
 Teleflask
 dataset
 psycopg2-binary
-pip==10.0.1
+pip==21.1
